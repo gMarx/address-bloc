@@ -17,9 +17,12 @@ RSpec.describe AddressBook do
   end
 
   describe '#add_entry' do
-    let(:book) { AddressBook.new }
+    let(:book) { AddressBook.new.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com') }
     it 'adds only one entry to the address book' do
-      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+      expect(book.entries.size).to eq(1)
+    end
+
+    it 'adds the correct information to entries' do
       new_entry = book.entries[0]
 
       expect(new_entry.name).to eq('Ada Lovelace')
@@ -28,4 +31,14 @@ RSpec.describe AddressBook do
     end
   end
 
+  describe '#remove_entry' do
+    let(:book) { AddressBook.new }
+
+    it 'removes the desired entry' do
+      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+      deleted_entry = book.remove_entry('Ada Lovelace')
+      puts "deted entry is type #{deleted_entry.class}"
+      expect(book.entries.size).to eq(0)
+    end
+  end
 end
