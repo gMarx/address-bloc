@@ -62,16 +62,18 @@ class AddressBook
 
       nil
     end
+  end
 
-    # this works, but could take a long time if entries is yuuuge
-    # index = 0
-    # entries.each do |entry|
-    #   if entry.name == name
-    #     break
-    #   end
-    #   index += 1
-    # end
-    #
-    # entries[index]
+  def iterative_search(name)
+    index = 0
+    entries.each do |entry|
+      if entry.name == name
+        break
+      end
+      index += 1
+    end
+
+    # if index > entries.length, this will implicitly return nil. Otherwise, it will return an Entry
+    entries[index]
   end
 end

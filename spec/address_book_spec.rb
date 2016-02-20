@@ -195,4 +195,52 @@ RSpec.describe AddressBook do
       end
     end
   end
+
+  describe '#iterative_search' do
+    context 'search AddressBook' do
+      before :each do
+        book.import_from_csv('entries.csv')
+      end
+
+      it 'should return nil for non-existent entry' do
+        entry = book.iterative_search('Paul')
+        expect(entry).to be_nil
+      end
+
+      it 'should be nil for Billy' do
+        entry = book.iterative_search('Billy')
+        expect(entry).to be_nil
+      end
+
+      it 'should return an entry for Bill' do
+        entry = book.iterative_search('Bill')
+        expect(entry).to be_a Entry
+        check_entry(entry, 'Bill', '555-555-4854', 'bill@blocmail.com' )
+      end
+
+      it 'should return an entry for Bob' do
+        entry = book.iterative_search('Bob')
+        expect(entry).to be_a Entry
+        check_entry(entry, 'Bob', '555-555-5415', 'bob@blocmail.com')
+      end
+
+      it 'should return an entry for Joe' do
+        entry = book.iterative_search('Joe')
+        expect(entry).to be_a Entry
+        check_entry(entry, 'Joe', '555-555-3660', 'joe@blocmail.com')
+      end
+
+      it 'should return an entry for Sally' do
+        entry = book.iterative_search('Sally')
+        expect(entry).to be_a Entry
+        check_entry(entry, 'Sally', '555-555-4646', 'sally@blocmail.com')
+      end
+
+      it 'should return an entry for Sussie' do
+        entry = book.iterative_search('Sussie')
+        expect(entry).to be_a Entry
+        check_entry(entry, 'Sussie', '555-555-2036', 'sussie@blocmail.com')
+      end
+    end
+  end
 end
