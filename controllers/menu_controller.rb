@@ -14,7 +14,8 @@ class MenuController
     puts '3 - Search for an entry'
     puts '4 - Import entries form a CSV'
     puts '5 - View Entry Number (n):'
-    puts '6 - Exit'
+    puts '6 - Delete All Entries'
+    puts '7 - Exit'
     print 'Enter your selection: '
 
     selection = gets.to_i
@@ -41,6 +42,10 @@ class MenuController
       view_entry_n
       main_menu
     when 6
+      system 'clear'
+      delete_all
+      main_menu
+    when 7
       system 'clear'
       exit(0)
     else
@@ -162,6 +167,11 @@ class MenuController
   def delete_entry(entry)
     @address_book.entries.delete(entry)
     puts "#{entry.name} has been deleted."
+  end
+
+  def delete_all
+    @address_book = AddressBook.new
+    puts "All records wiped. Address Book = #{@address_book.entries} \n \n"
   end
 
   def import_from_csv
