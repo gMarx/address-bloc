@@ -13,7 +13,8 @@ class MenuController
     puts '2 - Create an entry'
     puts '3 - Search for an entry'
     puts '4 - Import entries form a CSV'
-    puts '5 - Exit'
+    puts '5 - View Entry Number (n):'
+    puts '6 - Exit'
     print 'Enter your selection: '
 
     selection = gets.to_i
@@ -37,6 +38,10 @@ class MenuController
       main_menu
     when 5
       system 'clear'
+      view_entry_n
+      main_menu
+    when 6
+      system 'clear'
       exit(0)
     else
       system 'clear'
@@ -56,6 +61,26 @@ class MenuController
     system 'clear'
     puts 'that\'s all the people you know!'
     puts ''
+  end
+
+  def view_entry_n
+    puts 'What entry would you like to see? (Counting starts at 1) '
+    selection = gets.to_i
+
+    if selection == 0
+      system 'clear'
+      puts 'Error :: Please enter a valid number, 1 or greater. Please try again.'
+
+      view_entry_n
+    elsif @address_book.entries.length < (selection - 1)
+      system 'clear'
+      puts 'Error :: You\'ve chosen a number outside of the range. Please try again.'
+
+      view_entry_n
+    else
+      puts @address_book.entries[selection - 1].to_s
+    end
+
   end
 
   def create_entry
