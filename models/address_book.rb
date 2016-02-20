@@ -1,4 +1,5 @@
 require_relative 'entry'
+require 'csv'
 
 class AddressBook
 
@@ -29,6 +30,10 @@ class AddressBook
     end
 
     @entries.delete_at(index)
+  end
+
+  def import_from_csv(file_name)
+
   end
 
 end
