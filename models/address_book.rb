@@ -34,6 +34,9 @@ class AddressBook
 
   def import_from_csv(file_name)
     csv_text = File.read(file_name)
+    # the first row is a header, which is what the option `headers: true` signals, telling the CSV.parse to treat the 1st row differently.
+    # This will change the output from an array of arrays to a table of row objects, each representing a row.
+
     csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
 
     csv.each do |row|
