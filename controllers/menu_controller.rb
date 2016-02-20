@@ -100,8 +100,70 @@ class MenuController
 
   end
   def search_entries
+    print 'Search by name: '
+    search_name = gets.chomp
+    match = @address_book.binary_search(search_name)
+    system 'clear'
+
+    if match
+      puts match.to_s
+      search_submenu(match)
+    else
+      puts "No match found for #{search_name}."
+    end
 
   end
+
+  def search_submenu(entry)
+    puts "\nd - delete entry"
+    puts 'e - edit this entry'
+    puts 'm - return to main menu'
+
+    selection = gets.chomp
+    case selection
+    when 'd'
+      system 'clear'
+      delete_entry(entry)
+      main_menu
+    when 'e'
+      edit_entry(entry)
+      system 'clear'
+      main_menu
+    when 'm'
+      main_menu
+    else
+      system 'clear'
+      puts "#{selection} is not valid."
+      puts entry.to_s
+      search_submenu(entry)
+    end
+  end
+
+  def edit_entry(entry)
+    print 'Updated name: '
+    update_name = gets.chomp
+    print 'Updated phone number: '
+    update_phone_number = gets.chomp
+    print 'Updated email: '
+    update_email = gets.chomp
+
+    p "will update name: #{update_name}, phone number to #{update_phone_number}, and email to #{update_email}."
+
+    # changed to 'unless' from 'if !'
+    entry.name = update_name unless update_name.empty?
+    entry.phone_number = update_phone_number unless update_phone_number.empty?
+    entry.email = update_email unless update_email.empty?
+    system 'clear'
+
+    puts 'Updated entry: '
+    puts entry
+  end
+
+  def delete_entry(entry)
+    @address_book.entries.delete(entry)
+    puts "#{entry.name} has been deleted."
+  end
+
   def import_from_csv
 
   end
@@ -117,7 +179,10 @@ class MenuController
     case selection
     when 'n'
     when 'd'
+      delete_entry(entry)
     when 'e'
+      edit_entry(entry)
+      entry_submenu(entry)
     when 'm'
       main_menu
     else
@@ -127,4 +192,23 @@ class MenuController
     end
   end
 
+  def read_csv
+    print 'Enter CSV file to import'
+    file_name = gets.chomp
+
+    if file_name.empty?
+      system 'clear'
+      puts 'No CSV file read'
+      main_menu
+    end
+
+    begin
+      entry_count = @address_book.import_from_csv(file_name).count
+      system 'clear'
+      puts "#{entry_count} new entries added from #{file_name}"
+    rescue
+      puts "#{file_name} is not a valid CSV file, please enter a valid CSV file."
+      read_csv
+    end
+  end
 end

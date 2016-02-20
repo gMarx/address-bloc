@@ -74,7 +74,7 @@ class AddressBook
   def hash_search(name)
 
     # entries.each do |entry|
-      # puts "name: #{entry.name}, phone number: #{entry.phone_number}, email: #{entry.email}"
+      # puts entry.to_s
     # end
   end
 end
