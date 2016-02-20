@@ -43,4 +43,35 @@ class AddressBook
     end
   end
 
+  def binary_search(name)
+
+    lower = 0
+    upper = entries.length - 1
+
+    while lower <= upper
+      mid = (lower + upper) / 2
+      mid_name = entries[mid].name
+
+      if name == mid_name
+        return entries[mid]
+      elsif name < mid_name
+        upper = mid - 1
+      else
+        lower = mid + 1
+      end
+
+      nil
+    end
+
+    # this works, but could take a long time if entries is yuuuge
+    # index = 0
+    # entries.each do |entry|
+    #   if entry.name == name
+    #     break
+    #   end
+    #   index += 1
+    # end
+    #
+    # entries[index]
+  end
 end
