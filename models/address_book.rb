@@ -65,15 +65,13 @@ class AddressBook
   end
 
   def iterative_search(name)
-    index = 0
     entries.each do |entry|
-      if entry.name == name
-        break
-      end
-      index += 1
+      return entry if entry.name == name
     end
+    return nil
+  end
 
-    # if index > entries.length, this will implicitly return nil. Otherwise, it will return an Entry
-    entries[index]
+  def hash_search(name)
+
   end
 end
