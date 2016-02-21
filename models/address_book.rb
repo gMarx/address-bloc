@@ -21,15 +21,14 @@ class AddressBook
   end
 
   def remove_entry(name)
-    index = 0
-    @entries.each do |entry|
+    @entries.each_with_index do |entry, i|
       if name == entry.name
+        @index = i
         break
       end
-      index += 1
     end
 
-    @entries.delete_at(index)
+    @entries.delete_at(@index)
   end
 
   def import_from_csv(file_name)
